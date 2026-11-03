@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#FCF4E9">
+<title>Лучшие в спорте 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap&subset=cyrillic" rel="stylesheet">
+<!-- MAX Bridge (необязательно). Если скрипт не загрузится, страница работает как обычный сайт.
+     Проверьте актуальный адрес скрипта в документации MAX (dev.max.ru, раздел «Мини-приложения»). -->
+<script src="https://st.max.ru/js/max-web-app.js" async></script>
+
+<style>
+:root{
+  --ivory:#FCF4E9;
+  --champagne:#F3E5D0;
+  --sand:#E6D0B0;
+  --gold:#C39A5B;
+  --gold-light:#DDBB82;
+  --bronze:#8F6234;
+  --ink:#43301C;
+  --ink-soft:#6B5439;
+  --line:#D8BD92;
+  --focus:#6E4414;
+  --bar-h:56px;
+  color-scheme: light;
+  box-sizing:border-box;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{background:#F8EBD8;-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--bar-h) + env(safe-area-inset-top,0px) + 12px)}
+body{
+  margin:0;
+  font-family:'Montserrat','Segoe UI',Roboto,system-ui,-apple-system,Arial,sans-serif;
+  font-size:16px;line-height:1.6;color:var(--ink);
+  background:
+    radial-gradient(120% 60% at 50% 0%, #FFFBF4 0%, rgba(255,251,244,0) 70%),
+    linear-gradient(180deg,var(--ivory) 0%,#F8EBD8 100%);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  min-height:100vh;
+}
+h1,h2,h3,p{margin:0}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* ---------- верхняя панель ---------- */
+.bar{
+  position:fixed;top:0;left:0;right:0;z-index:20;
+  padding-top:env(safe-area-inset-top,0px);
+  background:rgba(252,244,233,.94);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.bar-in{height:var(--bar-h);max-width:760px;margin:0 auto;padding:0 8px;display:grid;grid-template-columns:48px 1fr 48px;align-items:center}
+.bar-title{text-align:center;font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{width:44px;height:44px;border:0;background:transparent;display:grid;place-items:center;border-radius:50%;cursor:pointer;color:var(--bronze)}
+.icon-btn[hidden]{display:none}
+.icon-btn:active{background:var(--champagne)}
+.icon-btn svg{width:24px;height:24px}
+
+main{max-width:760px;margin:0 auto;padding:calc(var(--bar-h) + env(safe-area-inset-top,0px)) 0 48px}
+.pad{padding-left:20px;padding-right:20px}
+
+/* ---------- заголовки с линиями, как в превью ---------- */
+.title{
+  display:grid;grid-template-columns:minmax(10px,1fr) auto minmax(10px,1fr);align-items:center;gap:14px;
+  margin:44px 0 22px;
+}
+.title::before,.title::after{content:"";height:1px;background:linear-gradient(90deg,transparent,var(--gold));}
+.title::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.title h2{
+  font-size:clamp(17px,4.8vw,22px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--bronze);text-align:center;line-height:1.3;max-width:16em;
+}
+.page-title{margin:30px 0 8px;text-align:center}
+.page-title h1{font-size:clamp(22px,6.4vw,30px);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--bronze);line-height:1.25}
+.page-lead{text-align:center;color:var(--ink-soft);font-size:15px;max-width:34em;margin:10px auto 0}
+.rule{display:block;width:120px;height:1px;margin:18px auto 0;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+/* ---------- главный экран ---------- */
+.hero{margin:0;position:relative}
+.hero img{display:block;width:100%;height:auto;aspect-ratio:1672/941;object-fit:cover}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold)}
+.cta-wrap{padding:22px 20px 0;display:grid;gap:12px;justify-items:center}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:52px;padding:0 28px;border-radius:999px;border:1px solid transparent;cursor:pointer;
+  font-weight:600;font-size:15px;letter-spacing:.06em;text-decoration:none;text-align:center;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn-gold{
+  color:#3A2610;
+  background:linear-gradient(135deg,#E8CB93 0%,#C9A062 48%,#B78B4A 100%);
+  box-shadow:0 6px 18px rgba(143,98,52,.28), inset 0 1px 0 rgba(255,255,255,.55);
+}
+.btn-gold:active{transform:translateY(1px);box-shadow:0 2px 8px rgba(143,98,52,.28)}
+.btn-line{color:var(--bronze);background:transparent;border-color:var(--gold)}
+.btn-line:active{background:var(--champagne)}
+.btn-wide{width:100%;max-width:420px}
+
+.prose p{color:var(--ink);margin-bottom:14px;max-width:38em}
+.prose p:last-child{margin-bottom:0}
+.prose{text-align:left}
+.placeholder{color:var(--ink-soft)}
+
+/* ---------- дорожная карта ---------- */
+.timeline{list-style:none;margin:0;padding:0;position:relative}
+.timeline::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:1px;background:linear-gradient(180deg,var(--gold),var(--line))}
+.timeline li{position:relative;padding:0 0 26px 40px}
+.timeline li:last-child{padding-bottom:0}
+.timeline li::before{
+  content:"";position:absolute;left:4px;top:6px;width:15px;height:15px;border-radius:50%;
+  background:var(--ivory);border:2px solid var(--gold);
+}
+.timeline li.now::before{background:linear-gradient(135deg,#E8CB93,#B78B4A);border-color:var(--bronze);box-shadow:0 0 0 5px rgba(195,154,91,.22)}
+.tl-date{font-weight:700;color:var(--bronze);font-size:15px}
+.tl-name{font-weight:600;margin-top:2px}
+.tl-text{color:var(--ink-soft);font-size:14.5px;margin-top:4px}
+
+/* ---------- как проголосовать ---------- */
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:14px;counter-reset:s}
+.steps li{
+  counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;
+  padding:16px 16px 16px 14px;background:rgba(255,251,244,.7);border:1px solid var(--line);border-radius:6px;
+}
+.steps li::before{
+  content:counter(s);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  font-weight:700;font-size:18px;color:var(--bronze);border:1.5px solid var(--gold);
+  background:radial-gradient(circle at 30% 25%,#FFF7E8,#F1DDB9);
+}
+.steps b{display:block;font-weight:600;margin-bottom:2px}
+.steps span{color:var(--ink-soft);font-size:14.5px}
+.note{margin-top:14px;font-size:13.5px;color:var(--ink-soft);text-align:center}
+
+/* ---------- строки-ссылки (номинации, разделы, документы) ---------- */
+.rows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.rows li{border-bottom:1px solid var(--line)}
+.row{
+  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
+  width:100%;padding:16px 4px;background:transparent;border:0;text-align:left;text-decoration:none;cursor:pointer;color:inherit;
+}
+.row:active{background:rgba(243,229,208,.6)}
+.row-name{font-weight:600;font-size:16.5px;line-height:1.3;color:var(--ink)}
+.row-sub{display:block;font-size:13.5px;color:var(--ink-soft);margin-top:3px;font-weight:400}
+.chev{width:20px;height:20px;color:var(--gold)}
+
+.big-links{display:grid;gap:14px;margin-top:6px}
+.big-link{
+  display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;
+  padding:20px 20px;text-decoration:none;color:var(--ink);
+  background:linear-gradient(135deg,#FFFBF3 0%,#F4E4CA 100%);
+  border:1px solid var(--gold);border-radius:6px;
+  box-shadow:0 8px 22px rgba(143,98,52,.14);
+}
+.big-link:active{transform:translateY(1px)}
+.big-link b{display:block;font-size:17px;font-weight:700;letter-spacing:.04em;color:var(--bronze);line-height:1.3}
+.big-link span{display:block;font-size:13.5px;color:var(--ink-soft);margin-top:4px}
+
+/* ---------- значок-логотип номинации ---------- */
+.badge{width:56px;height:56px;flex:none}
+.badge-lg{width:112px;height:112px;display:block;margin:0 auto}
+.logo-img{width:56px;height:56px;object-fit:contain;border-radius:50%}
+.logo-img.lg{width:112px;height:112px;display:block;margin:0 auto}
+
+/* ---------- детали номинации ---------- */
+.panel{padding:18px 18px;background:rgba(255,251,244,.75);border:1px solid var(--line);border-radius:6px}
+.panel h3{font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--bronze);margin-bottom:8px}
+.panel p{font-size:15px;color:var(--ink)}
+.panel .btn{margin-top:14px;min-height:46px;font-size:14px}
+.subs{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.sub{padding:16px 18px;border:1px solid var(--line);border-radius:6px;background:linear-gradient(135deg,#FFFBF3,#F7EAD3)}
+.sub h3{font-size:16px;font-weight:600;line-height:1.35}
+.sub p{font-size:14.5px;color:var(--ink-soft);margin-top:4px}
+.sub .btn{margin-top:12px;min-height:44px;padding:0 20px;font-size:13.5px}
+
+/* ---------- лучшие моменты ---------- */
+.moments{display:grid;gap:16px;grid-template-columns:1fr;margin:0;padding:0;list-style:none}
+.moment{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:rgba(255,251,244,.8)}
+.moment-media{
+  aspect-ratio:16/9;display:grid;place-items:center;color:var(--bronze);text-align:center;padding:12px;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.55),rgba(255,255,255,0) 40%),
+    linear-gradient(160deg,#EBD6B3,#D9BC8C);
+  font-size:13.5px;font-weight:500;
+}
+.moment-media img{width:100%;height:100%;object-fit:cover;display:block}
+.moment-body{padding:14px 16px 16px}
+.moment-body h3{font-size:16px;font-weight:600;line-height:1.35}
+.moment-body p{font-size:14.5px;color:var(--ink-soft);margin-top:4px}
+.moment-body a{display:inline-block;margin-top:10px;font-weight:600;color:var(--bronze);font-size:14px}
+
+/* ---------- документы ---------- */
+.doc-ico{width:40px;height:48px;color:var(--gold)}
+
+/* ---------- лента и подвал ---------- */
+.ribbon{display:block;width:100%;height:64px;margin-top:40px}
+footer{max-width:760px;margin:0 auto;padding:6px 20px 32px;text-align:center;color:var(--bronze)}
+footer b{display:block;font-weight:600;letter-spacing:.2em;text-transform:uppercase;font-size:12.5px}
+footer span{display:block;font-size:13px;color:var(--ink-soft);margin-top:4px;letter-spacing:.08em}
+
+/* ---------- меню ---------- */
+.sheet-bg{position:fixed;inset:0;z-index:30;background:rgba(67,48,28,.38);opacity:0;pointer-events:none;transition:opacity .2s ease}
+.sheet-bg.open{opacity:1;pointer-events:auto}
+.sheet{
+  position:fixed;top:0;right:0;bottom:0;z-index:31;width:min(86vw,360px);
+  background:var(--ivory);border-left:1px solid var(--gold);
+  padding:calc(env(safe-area-inset-top,0px) + 8px) 0 calc(env(safe-area-inset-bottom,0px) + 16px);
+  transform:translateX(102%);transition:transform .22s ease;overflow-y:auto;visibility:hidden;
+}
+.sheet.open{transform:none;visibility:visible}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;padding:0 8px 0 20px;height:48px}
+.sheet-head b{font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--bronze)}
+.sheet nav{padding:6px 12px}
+.sheet nav a{display:block;padding:13px 10px;text-decoration:none;font-weight:500;border-bottom:1px solid rgba(216,189,146,.55)}
+.sheet nav a.sub-item{padding-left:26px;font-size:14.5px;color:var(--ink-soft);font-weight:400}
+.sheet nav a.current{color:var(--bronze);font-weight:700}
+.sheet nav .gap{height:10px;border:0}
+.sheet .btn{margin:16px 20px 0;width:calc(100% - 40px)}
+
+/* смена экранов: только ответ на действие человека */
+.view{animation:enter .22s ease}
+@keyframes enter{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  .view{animation:none}.sheet,.sheet-bg,.btn{transition:none}
+}
+@media (min-width:640px){
+  .moments{grid-template-columns:1fr 1fr}
+  .pad{padding-left:28px;padding-right:28px}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar-in">
+    <button class="icon-btn" id="back" type="button" aria-label="Назад" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <span id="home-spacer"></span>
+    <div class="bar-title" id="bar-title">Лучшие в спорте</div>
+    <button class="icon-btn" id="menu-open" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="sheet-bg" id="menu-bg"></div>
+<aside class="sheet" id="menu" aria-label="Меню" aria-hidden="true">
+  <div class="sheet-head">
+    <b>Меню</b>
+    <button class="icon-btn" id="menu-close" type="button" aria-label="Закрыть меню">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <nav id="menu-nav"></nav>
+  <a class="btn btn-gold" id="menu-vote" data-bot href="#">Проголосовать</a>
+</aside>
+
+<main id="view" tabindex="-1"></main>
+
+<footer>
+  <svg class="ribbon" viewBox="0 0 760 64" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="rg" x1="0" x2="1">
+        <stop offset="0" stop-color="#B78B4A" stop-opacity="0"/><stop offset=".25" stop-color="#C9A062"/>
+        <stop offset=".55" stop-color="#EBD29B"/><stop offset=".8" stop-color="#B78B4A"/><stop offset="1" stop-color="#B78B4A" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <path d="M0 44 C 140 4, 260 62, 400 34 S 640 10, 760 38" fill="none" stroke="url(#rg)" stroke-width="2.4"/>
+    <path d="M0 52 C 150 18, 270 64, 410 44 S 650 24, 760 48" fill="none" stroke="url(#rg)" stroke-width="1.2" opacity=".8"/>
+    <path d="M0 36 C 130 -4, 250 56, 390 26 S 630 2, 760 30" fill="none" stroke="url(#rg)" stroke-width=".8" opacity=".6"/>
+  </svg>
+  <b>Нижегородская область</b>
+  <span>Лучшие в спорте · 2026</span>
+</footer>
+
+<noscript><p style="padding:24px;text-align:center">Для работы страницы включите JavaScript.</p></noscript>
+
+<script>
+/* =====================================================================
+   ДАННЫЕ. Всё содержимое страницы меняется только в этом блоке.
+   Тексты в квадратных скобках [...] - заглушки, замените их своими.
+   ===================================================================== */
+
+const CONFIG = {
+  // Ссылка на вашего бота: https://max.ru/ИМЯ_БОТА (имя бота - как в настройках бота)
+  botLink: "https://max.ru/ИМЯ_БОТА",
+  siteTitle: "Лучшие в спорте",
+  hero: "assets/preview.jpg"
+};
+
+const EVENT = {
+  about: [
+    "[Здесь будет описание мероприятия: что это за событие, кто его организует, какова цель.]",
+    "[Второй абзац: кто может быть номинантом, кто выбирает победителей, как пройдёт церемония награждения.]"
+  ],
+  // now: true - подсвечивает текущий этап
+  roadmap: [
+    { date: "[Дата]", name: "Приём заявок", text: "[Описание этапа: кто и как подаёт заявки.]" },
+    { date: "[Дата]", name: "Формирование списка номинантов", text: "[Описание этапа.]" },
+    { date: "16-30 ноября 2026", name: "Народное голосование", text: "Голосование проходит в чат-боте. В каждой категории можно отдать один голос.", now: true },
+    { date: "[Дата]", name: "Подведение итогов", text: "[Описание этапа.]" },
+    { date: "[Дата]", name: "Церемония награждения", text: "[Место и время проведения.]" }
+  ],
+  howto: [
+    { title: "Откройте бота", text: "Нажмите «Проголосовать» на этой странице: откроется чат с ботом голосования." },
+    { title: "Выберите номинацию", text: "Если у номинации есть подноминации, выберите нужную." },
+    { title: "Выберите номинанта", text: "Посмотрите карточку с фото и описанием и подтвердите выбор." },
+    { title: "Проголосуйте в других категориях", text: "В каждой категории доступен один голос. После подтверждения изменить его нельзя." }
+  ],
+  howtoNote: "Голосование: 16-30 ноября 2026 года."
+};
+
+/* key (p01...p13) должен совпадать с ключами в боте. logo - путь к картинке, например "assets/logo-athlete.png".
+   Если logo пустой, показывается золотой значок-заглушка.
+   regulation: null, если отдельного положения нет. */
+const NOMINATIONS = [
+  { id: "athlete", title: "Спортсмен года", logo: "",
+    description: "[Описание номинации «Спортсмен года»: кого отмечаем, по каким критериям.]",
+    regulation: null,
+    subs: [
+      { key: "p01", title: "В зимних олимпийских видах спорта", description: "[Описание подноминации.]" },
+      { key: "p02", title: "В летних олимпийских видах спорта", description: "[Описание подноминации.]" },
+      { key: "p03", title: "В паралимпийских/сурдлимпийских видах спорта", description: "[Описание подноминации.]" },
+      { key: "p04", title: "В неолимпийских видах спорта", description: "[Описание подноминации.]" }
+    ] },
+  { id: "talent", title: "Молодое дарование", logo: "",
+    description: "[Описание номинации «Молодое дарование»: возраст, достижения, критерии.]",
+    regulation: { text: "[Краткое содержание отдельного положения номинации: возрастные ограничения, критерии отбора.]", url: "" },
+    subs: [
+      { key: "p05", title: "В олимпийских видах спорта", description: "[Описание подноминации.]" },
+      { key: "p06", title: "В паралимпийских/сурдлимпийских видах спорта", description: "[Описание подноминации.]" },
+      { key: "p07", title: "В неолимпийских видах спорта", description: "[Описание подноминации.]" }
+    ] },
+  { id: "team", title: "Спортивная команда года", logo: "",
+    description: "[Описание номинации «Спортивная команда года».]",
+    regulation: null,
+    subs: [
+      { key: "p08", title: "Лучший игрок сезона", description: "[Описание подноминации.]" },
+      { key: "p09", title: "Лучшая информационная кампания", description: "[Описание подноминации.]" },
+      { key: "p10", title: "Лучший результат сезона", description: "[Описание подноминации.]" }
+    ] },
+  { id: "devotion", title: "За преданность спорту", logo: "", key: "p11",
+    description: "[Описание номинации «За преданность спорту».]",
+    regulation: null, subs: [] },
+  { id: "family", title: "Спортивная семья", logo: "", key: "p12",
+    description: "[Описание номинации «Спортивная семья».]",
+    regulation: null, subs: [] },
+  { id: "journalist", title: "Лучший журналист", logo: "", key: "p13",
+    description: "[Описание номинации «Лучший журналист».]",
+    regulation: null, subs: [] }
+];
+
+/* image - путь к фото (необязательно), url - ссылка на видео или пост (необязательно) */
+const MOMENTS = [
+  { title: "[Название момента]", text: "[Короткое описание: что произошло, где и когда.]", image: "", url: "" },
+  { title: "[Название момента]", text: "[Короткое описание.]", image: "", url: "" },
+  { title: "[Название момента]", text: "[Короткое описание.]", image: "", url: "" },
+  { title: "[Название момента]", text: "[Короткое описание.]", image: "", url: "" }
+];
+
+/* url - ссылка на файл документа (PDF) или страницу. Пустая ссылка = кнопка не показывается. */
+const DOCS = [
+  { title: "[Положение о мероприятии «Лучшие в спорте 2026»]", text: "[Номер и дата документа]", url: "" },
+  { title: "[Положение о проведении народного голосования]", text: "[Номер и дата документа]", url: "" },
+  { title: "[Другой нормативный документ]", text: "[Номер и дата документа]", url: "" }
+];
+
+/* =====================================================================
+   ЛОГИКА (обычно не требует изменений)
+   ===================================================================== */
+const $ = (s, r = document) => r.querySelector(s);
+const view = $("#view");
+const WA = window.WebApp || null; // MAX Bridge, если доступен
+
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const ICON_CHEV = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+const ICON_DOC = '<svg class="doc-ico" viewBox="0 0 40 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h17l9 9v32a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M25 3v9h9"/><path d="M13 22h15M13 28h15M13 34h9" stroke-linecap="round"/></svg>';
+
+function badge(nom, big) {
+  if (nom.logo) return `<img class="logo-img${big ? " lg" : ""}" src="${esc(nom.logo)}" alt="">`;
+  const gid = "bg" + nom.id + (big ? "L" : "S");
+  const letter = esc(nom.title.trim().charAt(0).toUpperCase());
+  return `<svg class="${big ? "badge-lg" : "badge"}" viewBox="0 0 112 112" aria-hidden="true">
+    <defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F2DDB0"/><stop offset=".5" stop-color="#C9A062"/><stop offset="1" stop-color="#9B6F36"/></linearGradient></defs>
+    <circle cx="56" cy="56" r="53" fill="#FFF8EA" stroke="url(#${gid})" stroke-width="3"/>
+    <circle cx="56" cy="56" r="45" fill="none" stroke="#D8BD92" stroke-width="1"/>
+    <text x="56" y="74" text-anchor="middle" font-family="Montserrat,Segoe UI,Arial,sans-serif" font-weight="700" font-size="52" fill="url(#${gid})">${letter}</text>
+  </svg>`;
+}
+
+function botUrl(payload) {
+  return CONFIG.botLink + (payload ? (CONFIG.botLink.includes("?") ? "&" : "?") + "start=" + encodeURIComponent(payload) : "");
+}
+function botBtn(label, payload, cls) {
+  return `<a class="btn ${cls || "btn-gold"}" data-bot href="${esc(botUrl(payload))}">${esc(label)}</a>`;
+}
+function openBot(url) {
+  try {
+    if (WA && typeof WA.openMaxLink === "function") { WA.openMaxLink(url); return; }
+    if (WA && typeof WA.openLink === "function") { WA.openLink(url); return; }
+  } catch (e) { /* переходим обычной ссылкой */ }
+  window.location.href = url;
+}
+document.addEventListener("click", e => {
+  const a = e.target.closest("a[data-bot]");
+  if (a) { e.preventDefault(); openBot(a.getAttribute("href")); }
+});
+
+/* ---------- экраны ---------- */
+function renderHome() {
+  const about = EVENT.about.map(p => `<p class="${p.startsWith("[") ? "placeholder" : ""}">${esc(p)}</p>`).join("");
+  const road = EVENT.roadmap.map(r => `
+    <li class="${r.now ? "now" : ""}">
+      <div class="tl-date ${r.date.startsWith("[") ? "placeholder" : ""}">${esc(r.date)}</div>
+      <div class="tl-name">${esc(r.name)}</div>
+      <p class="tl-text">${esc(r.text)}</p>
+    </li>`).join("");
+  const steps = EVENT.howto.map(s => `<li><div><b>${esc(s.title)}</b><span>${esc(s.text)}</span></div></li>`).join("");
+  return `
+    <figure class="hero"><img src="${esc(CONFIG.hero)}" alt="Лучшие в спорте 2026. Нижегородская область. Голосуйте, поддерживайте, вдохновляйтесь"></figure>
+    <div class="cta-wrap">${botBtn("Проголосовать", "vote", "btn-gold btn-wide")}</div>
+
+    <section class="pad" id="about" aria-labelledby="h-about">
+      <div class="title"><h2 id="h-about">О мероприятии</h2></div>
+      <div class="prose">${about}</div>
+    </section>
+
+    <section class="pad" id="roadmap" aria-labelledby="h-road">
+      <div class="title"><h2 id="h-road">Дорожная карта</h2></div>
+      <ol class="timeline">${road}</ol>
+    </section>
+
+    <section class="pad" id="howto" aria-labelledby="h-how">
+      <div class="title"><h2 id="h-how">Как принять участие в голосовании</h2></div>
+      <ol class="steps">${steps}</ol>
+      <p class="note">${esc(EVENT.howtoNote)}</p>
+      <div class="cta-wrap" style="padding-top:20px">${botBtn("Перейти к голосованию", "vote", "btn-gold btn-wide")}</div>
+    </section>
+
+    <section class="pad" id="sections" aria-labelledby="h-sec">
+      <div class="title"><h2 id="h-sec">Разделы</h2></div>
+      <div class="big-links">
+        <a class="big-link" href="#nominations"><div><b>Перечень номинаций</b><span>Все номинации, подноминации и положения</span></div>${ICON_CHEV}</a>
+        <a class="big-link" href="#moments"><div><b>Лучшие из лучших моментов</b><span>Яркие события спортивного года</span></div>${ICON_CHEV}</a>
+        <a class="big-link" href="#docs"><div><b>НПА мероприятия</b><span>Нормативные правовые акты и положения</span></div>${ICON_CHEV}</a>
+      </div>
+    </section>`;
+}
+
+function renderNominations() {
+  const rows = NOMINATIONS.map(n => {
+    const sub = n.subs.length ? `${n.subs.length} ${plural(n.subs.length, "подноминация", "подноминации", "подноминаций")}` : "Голосование в самой номинации";
+    return `<li><a class="row" href="#nomination-${esc(n.id)}">${badge(n, false)}
+      <span class="row-name">${esc(n.title)}<span class="row-sub">${esc(sub)}</span></span>${ICON_CHEV}</a></li>`;
+  }).join("");
+  return `
+    <div class="page-title pad"><h1>Перечень номинаций</h1><span class="rule"></span>
+      <p class="page-lead">Выберите номинацию, чтобы узнать подробности.</p></div>
+    <div class="pad" style="margin-top:26px"><ul class="rows">${rows}</ul>
+      <div class="cta-wrap" style="padding-top:28px">${botBtn("Перейти к голосованию", "vote", "btn-gold btn-wide")}</div></div>`;
+}
+
+function renderNomination(id) {
+  const n = NOMINATIONS.find(x => x.id === id);
+  if (!n) return renderNominations();
+  const reg = n.regulation ? `
+    <div class="panel" style="margin-top:16px"><h3>Положение</h3><p class="${n.regulation.text.startsWith("[") ? "placeholder" : ""}">${esc(n.regulation.text)}</p>
+      ${n.regulation.url ? `<a class="btn btn-line" href="${esc(n.regulation.url)}" target="_blank" rel="noopener">Открыть положение</a>` : ""}</div>` : "";
+  let tail;
+  if (n.subs.length) {
+    tail = `<div class="title"><h2>Подноминации</h2></div>
+      <ul class="subs">${n.subs.map(s => `<li class="sub"><h3>${esc(s.title)}</h3><p>${esc(s.description)}</p>
+        ${botBtn("Голосовать", s.key, "btn-gold")}</li>`).join("")}</ul>`;
+  } else {
+    tail = `<div class="cta-wrap" style="padding-top:26px">${botBtn("Проголосовать в этой номинации", n.key, "btn-gold btn-wide")}</div>`;
+  }
+  return `
+    <div class="page-title pad">${badge(n, true)}<h1 style="margin-top:16px">${esc(n.title)}</h1><span class="rule"></span></div>
+    <div class="pad" style="margin-top:24px">
+      <div class="panel"><h3>О номинации</h3><p class="${n.description.startsWith("[") ? "placeholder" : ""}">${esc(n.description)}</p></div>
+      ${reg}
+      ${tail}
+    </div>`;
+}
+
+function renderMoments() {
+  const items = MOMENTS.map(m => `
+    <li class="moment">
+      <div class="moment-media">${m.image ? `<img src="${esc(m.image)}" alt="${esc(m.title)}" loading="lazy">` : "Здесь будет фото или видео"}</div>
+      <div class="moment-body"><h3>${esc(m.title)}</h3><p>${esc(m.text)}</p>
+        ${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener">Смотреть</a>` : ""}</div>
+    </li>`).join("");
+  return `
+    <div class="page-title pad"><h1>Лучшие из лучших моментов</h1><span class="rule"></span>
+      <p class="page-lead">Самые яркие события спортивного года.</p></div>
+    <div class="pad" style="margin-top:26px"><ul class="moments">${items}</ul></div>`;
+}
+
+function renderDocs() {
+  const rows = DOCS.map(d => {
+    const inner = `${ICON_DOC}<span class="row-name">${esc(d.title)}<span class="row-sub">${esc(d.text)}</span></span>${d.url ? ICON_CHEV : "<span></span>"}`;
+    return d.url
+      ? `<li><a class="row" href="${esc(d.url)}" target="_blank" rel="noopener">${inner}</a></li>`
+      : `<li><div class="row" style="cursor:default">${inner}</div></li>`;
+  }).join("");
+  return `
+    <div class="page-title pad"><h1>НПА мероприятия</h1><span class="rule"></span>
+      <p class="page-lead">Нормативные правовые акты и положения, на основании которых проходит мероприятие.</p></div>
+    <div class="pad" style="margin-top:26px"><ul class="rows">${rows}</ul></div>`;
+}
+
+function plural(n, a, b, c) {
+  const m10 = n % 10, m100 = n % 100;
+  if (m10 === 1 && m100 !== 11) return a;
+  if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return b;
+  return c;
+}
+
+/* ---------- меню ---------- */
+const MENU = [
+  { href: "#home", label: "Главная" },
+  { href: "#about", label: "О мероприятии", sub: true },
+  { href: "#roadmap", label: "Дорожная карта", sub: true },
+  { href: "#howto", label: "Как проголосовать", sub: true },
+  { gap: true },
+  { href: "#nominations", label: "Перечень номинаций" },
+  { href: "#moments", label: "Лучшие из лучших моментов" },
+  { href: "#docs", label: "НПА мероприятия" }
+];
+function buildMenu(current) {
+  $("#menu-nav").innerHTML = MENU.map(m => m.gap ? '<div class="gap"></div>' :
+    `<a href="${m.href}" class="${m.sub ? "sub-item" : ""} ${m.href === current ? "current" : ""}">${esc(m.label)}</a>`).join("");
+}
+const menu = $("#menu"), menuBg = $("#menu-bg"), menuBtn = $("#menu-open");
+function setMenu(open) {
+  menu.classList.toggle("open", open);
+  menuBg.classList.toggle("open", open);
+  menu.setAttribute("aria-hidden", String(!open));
+  menuBtn.setAttribute("aria-expanded", String(open));
+  if (open) $("#menu-close").focus();
+}
+menuBtn.addEventListener("click", () => setMenu(true));
+$("#menu-close").addEventListener("click", () => { setMenu(false); menuBtn.focus(); });
+menuBg.addEventListener("click", () => setMenu(false));
+$("#menu-nav").addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+$("#menu-vote").setAttribute("href", botUrl("vote"));
+
+/* ---------- маршрутизация по адресу после # ---------- */
+const ANCHORS = ["about", "roadmap", "howto", "sections"];
+let lastPage = null;
+
+function route() {
+  const h = decodeURIComponent((location.hash || "#home").slice(1)) || "home";
+  let page = "home", html, barTitle = CONFIG.siteTitle, current = "#" + h;
+
+  if (h === "nominations") { page = "nominations"; html = renderNominations(); barTitle = "Номинации"; }
+  else if (h.startsWith("nomination-")) { page = h; html = renderNomination(h.slice(11)); barTitle = "Номинация"; current = "#nominations"; }
+  else if (h === "moments") { page = "moments"; html = renderMoments(); barTitle = "Лучшие моменты"; }
+  else if (h === "docs") { page = "docs"; html = renderDocs(); barTitle = "НПА"; }
+  else { page = "home"; if (!ANCHORS.includes(h)) current = "#home"; }
+
+  if (page !== lastPage) {
+    view.innerHTML = page === "home" ? renderHome() : html;
+    view.classList.remove("view"); void view.offsetWidth; view.classList.add("view");
+    if (!(page === "home" && ANCHORS.includes(h))) window.scrollTo(0, 0);
+  }
+  if (page === "home" && ANCHORS.includes(h)) {
+    const el = document.getElementById(h);
+    if (el) el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth", block: "start" });
+  }
+  lastPage = page;
+
+  $("#bar-title").textContent = barTitle;
+  const isHome = page === "home";
+  $("#back").hidden = isHome;
+  $("#home-spacer").hidden = !isHome;
+  document.title = (isHome ? "" : barTitle + " - ") + "Лучшие в спорте 2026";
+  buildMenu(current);
+  try { if (WA && WA.BackButton) { isHome ? WA.BackButton.hide() : WA.BackButton.show(); } } catch (e) {}
+}
+
+function goBack() {
+  if (history.length > 1) history.back(); else location.hash = "#home";
+}
+$("#back").addEventListener("click", goBack);
+try { if (WA) { WA.ready && WA.ready(); WA.BackButton && WA.BackButton.onClick && WA.BackButton.onClick(goBack); } } catch (e) {}
+
+window.addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
