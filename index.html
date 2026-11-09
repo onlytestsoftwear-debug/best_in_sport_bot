@@ -410,7 +410,7 @@ const NOMINATIONS = [
     regulation: { text: REG_COMMON, url: "" }, subs: [] },
   { id: "district", title: "Спортивный округ", logo: "",
     description: "[Описание номинации «Спортивный округ».]",
-    regulation: { text: REG_COMMON, url: "" }, subs: [] },
+    regulation: { text: REG_COMMON, url: "assets/docs/district-regulation.pdf", note: "PDF, 1,6 МБ" }, subs: [] },
   { id: "school", title: "Лучшая спортивная школа", logo: "",
     description: "[Описание номинации «Лучшая спортивная школа».]",
     regulation: { text: REG_COMMON, url: "" },
@@ -654,7 +654,8 @@ const ANCHORS = ["about", "roadmap", "howto", "sections"];
 let lastPage = null;
 
 function route() {
-  const h = decodeURIComponent((location.hash || "#home").slice(1)) || "home";
+  let h = "home";
+  try { h = decodeURIComponent((location.hash || "#home").slice(1)) || "home"; } catch (e) { /* битая ссылка: открываем главную */ }
   let page = "home", html, barTitle = CONFIG.siteTitle, current = "#" + h;
 
   if (h === "nominations") { page = "nominations"; html = renderNominations(); barTitle = "Номинации"; }
