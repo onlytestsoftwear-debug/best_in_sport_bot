@@ -81,10 +81,25 @@ main{max-width:760px;margin:0 auto;padding:calc(var(--bar-h) + env(safe-area-ins
 .rule{display:block;width:120px;height:1px;margin:18px auto 0;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 
 /* ---------- главный экран ---------- */
-.hero{margin:0;position:relative}
-.hero img{display:block;width:100%;height:auto;aspect-ratio:1672/941;object-fit:cover}
-.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold)}
-.cta-wrap{padding:22px 20px 0;display:grid;gap:12px;justify-items:center}
+/* Превью не лежит отдельной картинкой: сверху и снизу оно растворяется в фоне страницы,
+   золотые линии продолжаются в содержимое, кнопка «Проголосовать» стоит поверх размытого края. */
+.hero{margin:0 0 -44px;position:relative;z-index:0}
+.hero img{
+  display:block;width:100%;height:auto;aspect-ratio:1.5;object-fit:cover;object-position:50% 40%;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 11%,#000 70%,transparent 100%);
+          mask-image:linear-gradient(to bottom,transparent 0,#000 11%,#000 70%,transparent 100%);
+}
+.hero-flow{position:absolute;left:0;right:0;bottom:0;width:100%;height:96px;pointer-events:none}
+@media (min-width:700px){
+  .hero img{
+    aspect-ratio:1.9;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 11%,#000 70%,transparent 100%),linear-gradient(to right,transparent 0,#000 12%,#000 88%,transparent 100%);
+    -webkit-mask-composite:source-in;
+            mask-image:linear-gradient(to bottom,transparent 0,#000 11%,#000 70%,transparent 100%),linear-gradient(to right,transparent 0,#000 12%,#000 88%,transparent 100%);
+            mask-composite:intersect;
+  }
+}
+.cta-wrap{padding:22px 20px 0;display:grid;gap:12px;justify-items:center;position:relative;z-index:1}
 
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
@@ -144,7 +159,7 @@ main{max-width:760px;margin:0 auto;padding:calc(var(--bar-h) + env(safe-area-ins
   width:100%;padding:16px 4px;background:transparent;border:0;text-align:left;text-decoration:none;cursor:pointer;color:inherit;
 }
 .row:active{background:rgba(243,229,208,.6)}
-.row-name{font-weight:600;font-size:16.5px;line-height:1.3;color:var(--ink)}
+.row-name{font-weight:600;font-size:16.5px;line-height:1.3;color:var(--ink);overflow-wrap:anywhere}
 .row-sub{display:block;font-size:13.5px;color:var(--ink-soft);margin-top:3px;font-weight:400}
 .chev{width:20px;height:20px;color:var(--gold)}
 
@@ -171,6 +186,16 @@ main{max-width:760px;margin:0 auto;padding:calc(var(--bar-h) + env(safe-area-ins
 .panel h3{font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--bronze);margin-bottom:8px}
 .panel p{font-size:15px;color:var(--ink)}
 .panel .btn{margin-top:14px;min-height:46px;font-size:14px}
+.panel p+p{margin-top:8px}
+.dl{display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:center;margin-top:14px;padding:12px 14px;text-decoration:none;color:var(--ink);
+  border:1px solid var(--gold);border-radius:6px;background:linear-gradient(135deg,#FFFBF3,#F4E4CA)}
+.dl:active{transform:translateY(1px)}
+.dl-ico{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#3A2610;
+  background:linear-gradient(135deg,#E8CB93 0%,#C9A062 48%,#B78B4A 100%);box-shadow:0 4px 12px rgba(143,98,52,.28),inset 0 1px 0 rgba(255,255,255,.55)}
+.dl-ico svg{width:24px;height:24px}
+.dl-text b{display:block;font-weight:600;font-size:15px;color:var(--bronze)}
+.dl-text span{display:block;font-size:13px;color:var(--ink-soft);margin-top:2px}
+.panel .reg-soon{margin-top:12px;font-size:13.5px;color:var(--ink-soft);font-style:italic}
 .subs{display:grid;gap:12px;margin:0;padding:0;list-style:none}
 .sub{padding:16px 18px;border:1px solid var(--line);border-radius:6px;background:linear-gradient(135deg,#FFFBF3,#F7EAD3)}
 .sub h3{font-size:16px;font-weight:600;line-height:1.35}
@@ -315,43 +340,98 @@ const EVENT = {
   howtoNote: "Голосование: 16-30 ноября 2026 года."
 };
 
-/* key (p01...p13) должен совпадать с ключами в боте. logo - путь к картинке, например "assets/logo-athlete.png".
-   Если logo пустой, показывается золотой значок-заглушка.
-   regulation: null, если отдельного положения нет. */
+/* ПОРЯДОК номинаций на странице = порядок в этом списке.
+   key (p01...p15) у номинации или подноминации - это связь с ботом: есть key - появляется кнопка «Голосовать».
+   Нет key - номинация не участвует в голосовании в боте, кнопки голосования не показываются.
+   logo - путь к картинке, например "assets/logo-athlete.png". Пусто - золотой значок-заглушка.
+   regulation - отдельное положение: null, если его нет. Поля:
+     text - текст на странице номинации (строка или список абзацев),
+     url  - путь к файлу положения (например "assets/docs/federation.pdf") или ссылка. Когда url заполнен,
+            на странице номинации появляется кнопка с иконкой «Скачать положение». Пока пусто - пометка «будет опубликовано».
+     note - необязательная подпись под кнопкой, например "PDF, 1,2 МБ".
+   Тексты в квадратных скобках - заглушки. */
+const REG_COMMON = "Конкурс проводится по отдельному Положению.";
+const D = "[Описание подноминации.]"; // заглушка описания подноминации
+
 const NOMINATIONS = [
   { id: "athlete", title: "Спортсмен года", logo: "",
     description: "[Описание номинации «Спортсмен года»: кого отмечаем, по каким критериям.]",
     regulation: null,
     subs: [
-      { key: "p01", title: "В зимних олимпийских видах спорта", description: "[Описание подноминации.]" },
-      { key: "p02", title: "В летних олимпийских видах спорта", description: "[Описание подноминации.]" },
-      { key: "p03", title: "В паралимпийских/сурдлимпийских видах спорта", description: "[Описание подноминации.]" },
-      { key: "p04", title: "В неолимпийских видах спорта", description: "[Описание подноминации.]" }
+      { key: "p01", title: "В зимних олимпийских видах спорта", description: D },
+      { key: "p02", title: "В летних олимпийских видах спорта", description: D },
+      { key: "p03", title: "В паралимпийских/сурдлимпийских видах спорта", description: D },
+      { key: "p04", title: "В неолимпийских видах спорта", description: D },
+      { key: "p14", title: "В командно-игровых видах спорта", description: D }
+    ] },
+  { id: "coach", title: "Тренер года", logo: "",
+    description: "[Описание номинации «Тренер года».]",
+    regulation: null,
+    subs: [
+      { title: "В зимних олимпийских видах спорта", description: D },
+      { title: "В летних олимпийских видах спорта", description: D },
+      { title: "В паралимпийских/сурдлимпийских видах спорта", description: D },
+      { title: "В неолимпийских видах спорта", description: D },
+      { title: "В командно-игровых видах спорта", description: D }
     ] },
   { id: "talent", title: "Молодое дарование", logo: "",
     description: "[Описание номинации «Молодое дарование»: возраст, достижения, критерии.]",
-    regulation: { text: "[Краткое содержание отдельного положения номинации: возрастные ограничения, критерии отбора.]", url: "" },
+    regulation: null,
     subs: [
-      { key: "p05", title: "В олимпийских видах спорта", description: "[Описание подноминации.]" },
-      { key: "p06", title: "В паралимпийских/сурдлимпийских видах спорта", description: "[Описание подноминации.]" },
-      { key: "p07", title: "В неолимпийских видах спорта", description: "[Описание подноминации.]" }
+      { key: "p05", title: "В олимпийских видах спорта", description: D },
+      { key: "p06", title: "В паралимпийских/сурдлимпийских видах спорта", description: D },
+      { key: "p07", title: "В неолимпийских видах спорта", description: D },
+      { key: "p15", title: "В командно-игровых видах спорта", description: D }
     ] },
   { id: "team", title: "Спортивная команда года", logo: "",
     description: "[Описание номинации «Спортивная команда года».]",
     regulation: null,
     subs: [
-      { key: "p08", title: "Лучший игрок сезона", description: "[Описание подноминации.]" },
-      { key: "p09", title: "Лучшая информационная кампания", description: "[Описание подноминации.]" },
-      { key: "p10", title: "Лучший результат сезона", description: "[Описание подноминации.]" }
+      { key: "p08", title: "Лучший игрок сезона", description: D },
+      { key: "p09", title: "Лучшая информационная кампания", description: D },
+      { key: "p10", title: "Лучший результат сезона", description: D }
     ] },
   { id: "devotion", title: "За преданность спорту", logo: "", key: "p11",
     description: "[Описание номинации «За преданность спорту».]",
     regulation: null, subs: [] },
+  { id: "federation", title: "Лучшая региональная спортивная федерация", logo: "",
+    description: "[Описание номинации «Лучшая региональная спортивная федерация».]",
+    regulation: { text: REG_COMMON, url: "" },
+    subs: [
+      { title: "По олимпийским видам спорта", description: D },
+      { title: "По адаптивным видам спорта", description: D },
+      { title: "По неолимпийским видам спорта", description: D }
+    ] },
   { id: "family", title: "Спортивная семья", logo: "", key: "p12",
     description: "[Описание номинации «Спортивная семья».]",
-    regulation: null, subs: [] },
+    regulation: { text: "Конкурс проводится по отдельному Положению, предусматривающему этап голосования.", url: "assets/docs/family-regulation.pdf", note: "PDF, 1,8 МБ" }, subs: [] },
+  { id: "fok", title: "Лучший ФОК", logo: "",
+    description: "[Описание номинации «Лучший ФОК».]",
+    regulation: { text: REG_COMMON, url: "" }, subs: [] },
+  { id: "district", title: "Спортивный округ", logo: "",
+    description: "[Описание номинации «Спортивный округ».]",
+    regulation: { text: REG_COMMON, url: "" }, subs: [] },
+  { id: "school", title: "Лучшая спортивная школа", logo: "",
+    description: "[Описание номинации «Лучшая спортивная школа».]",
+    regulation: { text: REG_COMMON, url: "" },
+    subs: [
+      { title: "Среди спортивных школ", description: D },
+      { title: "Среди спортивных школ олимпийского резерва", description: D }
+    ] },
+  { id: "gto", title: "Лучший муниципальный центр тестирования ВФСК ГТО", logo: "",
+    description: "[Описание номинации «Лучший муниципальный центр тестирования ВФСК ГТО».]",
+    regulation: { text: REG_COMMON, url: "" }, subs: [] },
   { id: "journalist", title: "Лучший журналист", logo: "", key: "p13",
     description: "[Описание номинации «Лучший журналист».]",
+    regulation: null, subs: [] },
+  { id: "adaptive", title: "Лучшая организация адаптивного спорта", logo: "",
+    description: "[Описание номинации «Лучшая организация адаптивного спорта».]",
+    regulation: null, subs: [] },
+  { id: "digital", title: "Цифровая трансформация спорта", logo: "",
+    description: "[Описание номинации «Цифровая трансформация спорта».]",
+    regulation: { text: REG_COMMON, url: "" }, subs: [] },
+  { id: "thanks", title: "Спасибо", logo: "",
+    description: "[Описание номинации «Спасибо».]",
     regulation: null, subs: [] }
 ];
 
@@ -380,6 +460,7 @@ const WA = window.WebApp || null; // MAX Bridge, если доступен
 const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 const ICON_CHEV = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+const ICON_DL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 20h14"/></svg>';
 const ICON_DOC = '<svg class="doc-ico" viewBox="0 0 40 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h17l9 9v32a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M25 3v9h9"/><path d="M13 22h15M13 28h15M13 34h9" stroke-linecap="round"/></svg>';
 
 function badge(nom, big) {
@@ -424,7 +505,14 @@ function renderHome() {
     </li>`).join("");
   const steps = EVENT.howto.map(s => `<li><div><b>${esc(s.title)}</b><span>${esc(s.text)}</span></div></li>`).join("");
   return `
-    <figure class="hero"><img src="${esc(CONFIG.hero)}" alt="Лучшие в спорте 2026. Нижегородская область. Голосуйте, поддерживайте, вдохновляйтесь"></figure>
+    <figure class="hero"><img src="${esc(CONFIG.hero)}" alt="Лучшие в спорте 2026. Нижегородская область. Голосуйте, поддерживайте, вдохновляйтесь">
+      <svg class="hero-flow" viewBox="0 0 760 96" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="hf" x1="0" x2="1">
+          <stop offset="0" stop-color="#B78B4A" stop-opacity=".0"/><stop offset=".2" stop-color="#C9A062"/>
+          <stop offset=".5" stop-color="#EBD29B"/><stop offset=".82" stop-color="#B78B4A"/><stop offset="1" stop-color="#B78B4A" stop-opacity="0"/></linearGradient></defs>
+        <path d="M0 70 C 150 30, 280 92, 420 58 S 650 26, 760 60" fill="none" stroke="url(#hf)" stroke-width="2"/>
+        <path d="M0 84 C 160 52, 290 94, 430 76 S 660 48, 760 76" fill="none" stroke="url(#hf)" stroke-width="1" opacity=".75"/>
+      </svg></figure>
     <div class="cta-wrap">${botBtn("Проголосовать", "vote", "btn-gold btn-wide")}</div>
 
     <section class="pad" id="about" aria-labelledby="h-about">
@@ -456,7 +544,8 @@ function renderHome() {
 
 function renderNominations() {
   const rows = NOMINATIONS.map(n => {
-    const sub = n.subs.length ? `${n.subs.length} ${plural(n.subs.length, "подноминация", "подноминации", "подноминаций")}` : "Голосование в самой номинации";
+    const sub = n.subs.length ? `${n.subs.length} ${plural(n.subs.length, "подноминация", "подноминации", "подноминаций")}`
+      : (n.key ? "Голосование в самой номинации" : (n.regulation ? "Подробности в положении" : "Подробнее о номинации"));
     return `<li><a class="row" href="#nomination-${esc(n.id)}">${badge(n, false)}
       <span class="row-name">${esc(n.title)}<span class="row-sub">${esc(sub)}</span></span>${ICON_CHEV}</a></li>`;
   }).join("");
@@ -470,15 +559,22 @@ function renderNominations() {
 function renderNomination(id) {
   const n = NOMINATIONS.find(x => x.id === id);
   if (!n) return renderNominations();
-  const reg = n.regulation ? `
-    <div class="panel" style="margin-top:16px"><h3>Положение</h3><p class="${n.regulation.text.startsWith("[") ? "placeholder" : ""}">${esc(n.regulation.text)}</p>
-      ${n.regulation.url ? `<a class="btn btn-line" href="${esc(n.regulation.url)}" target="_blank" rel="noopener">Открыть положение</a>` : ""}</div>` : "";
-  let tail;
+  let reg = "";
+  if (n.regulation) {
+    const paras = [].concat(n.regulation.text || []).map(t => `<p class="${String(t).startsWith("[") ? "placeholder" : ""}">${esc(t)}</p>`).join("");
+    const dl = n.regulation.url
+      ? `<a class="dl" href="${esc(n.regulation.url)}" download target="_blank" rel="noopener">
+           <span class="dl-ico">${ICON_DL}</span>
+           <span class="dl-text"><b>${esc(n.regulation.label || "Скачать положение")}</b>${n.regulation.note ? `<span>${esc(n.regulation.note)}</span>` : ""}</span></a>`
+      : `<p class="reg-soon">Текст положения будет опубликован на этой странице.</p>`;
+    reg = `<div class="panel" style="margin-top:16px"><h3>Положение</h3>${paras}${dl}</div>`;
+  }
+  let tail = "";
   if (n.subs.length) {
     tail = `<div class="title"><h2>Подноминации</h2></div>
       <ul class="subs">${n.subs.map(s => `<li class="sub"><h3>${esc(s.title)}</h3><p>${esc(s.description)}</p>
-        ${botBtn("Голосовать", s.key, "btn-gold")}</li>`).join("")}</ul>`;
-  } else {
+        ${s.key ? botBtn("Голосовать", s.key, "btn-gold") : ""}</li>`).join("")}</ul>`;
+  } else if (n.key) {
     tail = `<div class="cta-wrap" style="padding-top:26px">${botBtn("Проголосовать в этой номинации", n.key, "btn-gold btn-wide")}</div>`;
   }
   return `
