@@ -132,6 +132,8 @@ main{max-width:760px;margin:0 auto;padding:calc(var(--bar-h) + env(safe-area-ins
   background:var(--ivory);border:2px solid var(--gold);
 }
 .timeline li.now::before{background:linear-gradient(135deg,#E8CB93,#B78B4A);border-color:var(--bronze);box-shadow:0 0 0 5px rgba(195,154,91,.22)}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.tl-now{display:none}.now .tl-now{display:inline}
 .tl-date{font-weight:700;color:var(--bronze);font-size:15px}
 .tl-name{font-weight:600;margin-top:2px}
 .tl-text{color:var(--ink-soft);font-size:14.5px;margin-top:4px}
@@ -312,7 +314,7 @@ footer span{display:block;font-size:13px;color:var(--ink-soft);margin-top:4px;le
    ===================================================================== */
 
 const CONFIG = {
-  // Ссылка на вашего бота: https://max.ru/best_in_sport_bot
+  // Ссылка на бота (формат диплинков MAX: https://max.ru/ИМЯ_БОТА?start=...)
   botLink: "https://max.ru/best_in_sport_bot",
   siteTitle: "Лучшие в спорте",
   hero: "assets/preview.jpg"
@@ -323,25 +325,29 @@ const EVENT = {
     "[Здесь будет описание мероприятия: что это за событие, кто его организует, какова цель.]",
     "[Второй абзац: кто может быть номинантом, кто выбирает победителей, как пройдёт церемония награждения.]"
   ],
-  // start / end — машиночитаемые даты (ГГГГ-ММ-ДД).
-  // Кружочек "now" вычисляется автоматически по текущей дате.
-  // Если end не указан — этап считается однодневным.
+  // from / to - даты этапа включительно (ГГГГ-ММ-ДД, по московскому времени).
+  // Точка этапа загорается, когда сегодняшняя дата входит в этот диапазон.
   roadmap: [
-    { date: "с 5 ноября 2026 по 15 ноября 2026", start: "2026-11-05", end: "2026-11-15", name: "Подача заявок", text: "Заявки на участие могут быть поданы любыми физкультурно-спортивными организациями Нижегородской области, физическими лицами, проживающими на территории Нижегородской области" },
-    { date: "до 18 ноября 2026", start: "2026-11-16", end: "2026-11-18", name: "Заседание комиссии", text: "Комиссия определяет не менее 5 кандидатов по номинациям для участия в онлайн голосовании" },
-    { date: "с 20 ноября 2026 по 30 ноября 2026", start: "2026-11-20", end: "2026-11-30", name: "Онлайн голосование", text: "Голосование проходит в чат-боте. В каждой категории можно отдать один голос. По наибольшему количеству голосов определяются 3 лучших кандидата для обсуждения на заседании комиссии" },
-    { date: "до 2 декабря 2026", start: "2026-12-01", end: "2026-12-02", name: "Заседание комиссии", text: "Комиссия определяет и утверждает победителей и призеров по номинациям." },
-    { date: "до 6 декабря 2026", start: "2026-12-03", end: "2026-12-06", name: "Итоги конкурса", text: "" },
-    { date: "17 декабря 2026", start: "2026-12-17", end: "2026-12-17", name: "Церемония награждения", text: "Стадион Нижний Новгород 19:00" },
-    { date: "", name: "", text: "Сроки проведения этапов могут быть скорректированы, ввиду технических особенностей процесса проведения." }
+    { date: "с 5 ноября 2026 по 15 ноября 2026", from: "2026-11-05", to: "2026-11-15", name: "Подача заявок",
+      text: "Заявки на участие могут быть поданы любыми физкультурно-спортивными организациями Нижегородской области, физическими лицами, проживающими на территории Нижегородской области" },
+    { date: "до 18 ноября 2026", from: "2026-11-16", to: "2026-11-18", name: "Заседание комиссии",
+      text: "Комиссия определяет не менее 5 кандидатов по номинациям для участия в онлайн голосовании" },
+    { date: "с 20 ноября 2026 по 30 ноября 2026", from: "2026-11-20", to: "2026-11-30", name: "Онлайн голосование",
+      text: "Голосование проходит в чат-боте. В каждой категории можно отдать один голос. По наибольшему количеству голосов определяются 3 лучших кандидата для обсуждения на заседании комиссии" },
+    { date: "до 2 декабря 2026", from: "2026-12-01", to: "2026-12-02", name: "Заседание комиссии",
+      text: "Комиссия определяет и утверждает победителей и призеров по номинациям." },
+    { date: "до 6 декабря 2026", from: "2026-12-03", to: "2026-12-06", name: "Итоги конкурса", text: "" },
+    { date: "17 декабря 2026", from: "2026-12-17", to: "2026-12-17", name: "Церемония награждения",
+      text: "Стадион Нижний Новгород 19:00" }
   ],
+  roadmapNote: "Сроки проведения этапов могут быть скорректированы, ввиду технических особенностей процесса проведения.",
   howto: [
     { title: "Откройте бота", text: "Нажмите «Проголосовать» на этой странице: откроется чат с ботом голосования." },
     { title: "Выберите номинацию", text: "Если у номинации есть подноминации, выберите нужную." },
     { title: "Выберите номинанта", text: "Посмотрите карточку с фото и описанием и подтвердите выбор." },
     { title: "Проголосуйте в других категориях", text: "В каждой категории доступен один голос. После подтверждения изменить его нельзя." }
   ],
-  howtoNote: "Голосование: 16-30 ноября 2026 года."
+  howtoNote: "Онлайн голосование: с 20 по 30 ноября 2026 года."
 };
 
 /* ПОРЯДОК номинаций на странице = порядок в этом списке.
@@ -411,13 +417,13 @@ const NOMINATIONS = [
     regulation: { text: "Конкурс проводится по отдельному Положению, предусматривающему этап голосования.", url: "assets/docs/family-regulation.pdf", note: "PDF, 1,8 МБ" }, subs: [] },
   { id: "fok", title: "Лучший ФОК", logo: "",
     description: "[Описание номинации «Лучший ФОК».]",
-    regulation: { text: REG_COMMON, url: "" }, subs: [] },
+    regulation: { text: REG_COMMON, url: "assets/docs/fok-regulation.pdf", note: "PDF, 1,0 МБ" }, subs: [] },
   { id: "district", title: "Спортивный округ", logo: "",
     description: "[Описание номинации «Спортивный округ».]",
     regulation: { text: REG_COMMON, url: "assets/docs/district-regulation.pdf", note: "PDF, 1,6 МБ" }, subs: [] },
   { id: "school", title: "Лучшая спортивная школа", logo: "",
     description: "[Описание номинации «Лучшая спортивная школа».]",
-    regulation: { text: REG_COMMON, url: "" },
+    regulation: { text: REG_COMMON, url: "assets/docs/school-regulation.pdf", note: "PDF, 2,6 МБ" },
     subs: [
       { title: "Среди спортивных школ", description: D },
       { title: "Среди спортивных школ олимпийского резерва", description: D }
@@ -501,33 +507,12 @@ document.addEventListener("click", e => {
 /* ---------- экраны ---------- */
 function renderHome() {
   const about = EVENT.about.map(p => `<p class="${p.startsWith("[") ? "placeholder" : ""}">${esc(p)}</p>`).join("");
-  const isNow = (r) => {
-    if (!r.start) return false; // Если дат нет, не подсвечиваем
-    // Получаем текущую дату. Для корректного сравнения обнуляем время.
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    // Парсим даты начала и конца
-    const start = new Date(r.start);
-    start.setHours(0, 0, 0, 0);
-    
-    // Если end нет, считаем, что этап длится один день (как start)
-    const end = r.end ? new Date(r.end) : new Date(r.start);
-    end.setHours(23, 59, 59, 999);
-
-    return today >= start && today <= end;
-  };
-
-  const road = EVENT.roadmap.map(r => {
-    // Вычисляем актуальность динамически, игнорируя r.now из данных
-    const nowClass = isNow(r) ? "now" : "";
-    return `
-    <li class="${nowClass}">
-      <div class="tl-date ${r.date.startsWith("[") ? "placeholder" : ""}">${esc(r.date)}</div>
-      <div class="tl-name">${esc(r.name)}</div>
-      <p class="tl-text">${esc(r.text)}</p>
-    </li>`;
-  }).join("");
+  const road = EVENT.roadmap.map(r => `
+    <li data-from="${esc(r.from || "")}" data-to="${esc(r.to || "")}">
+      <div class="tl-date">${esc(r.date)}</div>
+      <div class="tl-name">${esc(r.name)}<span class="sr-only tl-now"> (идёт сейчас)</span></div>
+      ${r.text ? `<p class="tl-text">${esc(r.text)}</p>` : ""}
+    </li>`).join("");
   const steps = EVENT.howto.map(s => `<li><div><b>${esc(s.title)}</b><span>${esc(s.text)}</span></div></li>`).join("");
   return `
     <figure class="hero"><img src="${esc(CONFIG.hero)}" alt="Лучшие в спорте 2026. Нижегородская область. Голосуйте, поддерживайте, вдохновляйтесь">
@@ -548,6 +533,7 @@ function renderHome() {
     <section class="pad" id="roadmap" aria-labelledby="h-road">
       <div class="title"><h2 id="h-road">Дорожная карта</h2></div>
       <ol class="timeline">${road}</ol>
+      <p class="note">${esc(EVENT.roadmapNote)}</p>
     </section>
 
     <section class="pad" id="howto" aria-labelledby="h-how">
@@ -644,6 +630,21 @@ function plural(n, a, b, c) {
   return c;
 }
 
+/* ---------- дорожная карта: подсветка текущего этапа ---------- */
+function todayMsk() {
+  // сегодняшняя дата по Москве в формате ГГГГ-ММ-ДД, не зависит от часового пояса телефона
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Moscow", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+}
+function updateRoadmapNow() {
+  const today = todayMsk();
+  document.querySelectorAll(".timeline li").forEach(li => {
+    const from = li.dataset.from, to = li.dataset.to;
+    li.classList.toggle("now", !!from && !!to && today >= from && today <= to);
+  });
+}
+setInterval(updateRoadmapNow, 5 * 60 * 1000);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) updateRoadmapNow(); });
+
 /* ---------- меню ---------- */
 const MENU = [
   { href: "#home", label: "Главная" },
@@ -693,6 +694,7 @@ function route() {
     view.innerHTML = page === "home" ? renderHome() : html;
     view.classList.remove("view"); void view.offsetWidth; view.classList.add("view");
     if (!(page === "home" && ANCHORS.includes(h))) window.scrollTo(0, 0);
+    updateRoadmapNow();
   }
   if (page === "home" && ANCHORS.includes(h)) {
     const el = document.getElementById(h);
