@@ -364,7 +364,7 @@ const REG_COMMON = "Конкурс проводится по отдельном�
 const D = "[Описание подноминации.]"; // заглушка описания подноминации
 
 const NOMINATIONS = [
-  { id: "athlete", title: "Спортсмен года", logo: "",
+  { id: "athlete", title: "Спортсмен года", logo: "assets/logo-athlete.png",
     description: "[Описание номинации «Спортсмен года»: кого отмечаем, по каким критериям.]",
     regulation: null,
     subs: [
@@ -374,7 +374,7 @@ const NOMINATIONS = [
       { key: "p04", title: "В неолимпийских видах спорта", description: D },
       { key: "p14", title: "В командно-игровых видах спорта", description: D }
     ] },
-  { id: "coach", title: "Тренер года", logo: "",
+  { id: "coach", title: "Тренер года", logo: "assets/logo-coach.png",
     description: "[Описание номинации «Тренер года».]",
     regulation: null,
     subs: [
@@ -384,7 +384,7 @@ const NOMINATIONS = [
       { title: "В неолимпийских видах спорта", description: D },
       { title: "В командно-игровых видах спорта", description: D }
     ] },
-  { id: "talent", title: "Молодое дарование", logo: "",
+  { id: "talent", title: "Молодое дарование", logo: "assets/logo-talent.png",
     description: "[Описание номинации «Молодое дарование»: возраст, достижения, критерии.]",
     regulation: null,
     subs: [
@@ -393,7 +393,7 @@ const NOMINATIONS = [
       { key: "p07", title: "В неолимпийских видах спорта", description: D },
       { key: "p15", title: "В командно-игровых видах спорта", description: D }
     ] },
-  { id: "team", title: "Спортивная команда года", logo: "",
+  { id: "team", title: "Спортивная команда года", logo: "assets/logo-team.png",
     description: "[Описание номинации «Спортивная команда года».]",
     regulation: null,
     subs: [
@@ -401,10 +401,10 @@ const NOMINATIONS = [
       { key: "p09", title: "Лучшая информационная кампания", description: D },
       { key: "p10", title: "Лучший результат сезона", description: D }
     ] },
-  { id: "devotion", title: "За преданность спорту", logo: "", key: "p11",
+  { id: "devotion", title: "За преданность спорту", logo: "assets/logo-devotion.png", key: "p11",
     description: "[Описание номинации «За преданность спорту».]",
     regulation: null, subs: [] },
-  { id: "federation", title: "Лучшая региональная спортивная федерация", logo: "",
+  { id: "federation", title: "Лучшая региональная спортивная федерация", logo: "assets/logo-federation.png",
     description: "[Описание номинации «Лучшая региональная спортивная федерация».]",
     regulation: { text: REG_COMMON, url: "" },
     subs: [
@@ -412,35 +412,35 @@ const NOMINATIONS = [
       { title: "По адаптивным видам спорта", description: D },
       { title: "По неолимпийским видам спорта", description: D }
     ] },
-  { id: "family", title: "Спортивная семья", logo: "", key: "p12",
+  { id: "family", title: "Спортивная семья", logo: "assets/logo-family.png", key: "p12",
     description: "[Описание номинации «Спортивная семья».]",
     regulation: { text: "Конкурс проводится по отдельному Положению, предусматривающему этап голосования.", url: "assets/docs/family-regulation.pdf", note: "PDF, 1,8 МБ" }, subs: [] },
-  { id: "fok", title: "Лучший ФОК", logo: "",
+  { id: "fok", title: "Лучший ФОК", logo: "assets/logo-fok.png",
     description: "[Описание номинации «Лучший ФОК».]",
     regulation: { text: REG_COMMON, url: "assets/docs/fok-regulation.pdf", note: "PDF, 1,0 МБ" }, subs: [] },
-  { id: "district", title: "Спортивный округ", logo: "",
+  { id: "district", title: "Спортивный округ", logo: "assets/logo-district.png",
     description: "[Описание номинации «Спортивный округ».]",
     regulation: { text: REG_COMMON, url: "assets/docs/district-regulation.pdf", note: "PDF, 1,6 МБ" }, subs: [] },
-  { id: "school", title: "Лучшая спортивная школа", logo: "",
+  { id: "school", title: "Лучшая спортивная школа", logo: "assets/logo-school.png",
     description: "[Описание номинации «Лучшая спортивная школа».]",
     regulation: { text: REG_COMMON, url: "assets/docs/school-regulation.pdf", note: "PDF, 2,6 МБ" },
     subs: [
       { title: "Среди спортивных школ", description: D },
       { title: "Среди спортивных школ олимпийского резерва", description: D }
     ] },
-  { id: "gto", title: "Лучший муниципальный центр тестирования ВФСК ГТО", logo: "",
+  { id: "gto", title: "Лучший муниципальный центр тестирования ВФСК ГТО", logo: "assets/logo-gto.png",
     description: "[Описание номинации «Лучший муниципальный центр тестирования ВФСК ГТО».]",
     regulation: { text: REG_COMMON, url: "" }, subs: [] },
-  { id: "journalist", title: "Лучший журналист", logo: "", key: "p13",
+  { id: "journalist", title: "Лучший журналист", logo: "assets/logo-journalist.png", key: "p13",
     description: "[Описание номинации «Лучший журналист».]",
     regulation: null, subs: [] },
-  { id: "adaptive", title: "Лучшая организация адаптивного спорта", logo: "",
+  { id: "adaptive", title: "Лучшая организация адаптивного спорта", logo: "assets/logo-adaptive.png",
     description: "[Описание номинации «Лучшая организация адаптивного спорта».]",
     regulation: null, subs: [] },
-  { id: "digital", title: "Цифровая трансформация спорта", logo: "",
+  { id: "digital", title: "Цифровая трансформация спорта", logo: "assets/logo-digital.png",
     description: "[Описание номинации «Цифровая трансформация спорта».]",
     regulation: { text: REG_COMMON, url: "" }, subs: [] },
-  { id: "thanks", title: "Спасибо", logo: "",
+  { id: "thanks", title: "Спасибо", logo: "assets/logo-thanks.png",
     description: "[Описание номинации «Спасибо».]",
     regulation: null, subs: [] }
 ];
@@ -455,7 +455,7 @@ const MOMENTS = [
 
 /* url - ссылка на файл документа (PDF) или страницу. Пустая ссылка = кнопка не показывается. */
 const DOCS = [
-  { title: "[Положение о мероприятии «Лучшие в спорте 2026»]", text: "[Номер и дата документа]", url: "" },
+  { title: 'Приказ о проведении конкурса «Лучшие в спорте» 2026 года', text: "№ 358 от 03.11.2026", url: "assets/docs/event-regulation.pdf" },
   { title: "[Положение о проведении народного голосования]", text: "[Номер и дата документа]", url: "" },
   { title: "[Другой нормативный документ]", text: "[Номер и дата документа]", url: "" }
 ];
@@ -574,10 +574,15 @@ function renderNomination(id) {
   if (n.regulation) {
     const paras = [].concat(n.regulation.text || []).map(t => `<p class="${String(t).startsWith("[") ? "placeholder" : ""}">${esc(t)}</p>`).join("");
     const dl = n.regulation.url
-      ? `<a class="dl" href="${esc(n.regulation.url)}" download target="_blank" rel="noopener">
-           <span class="dl-ico">${ICON_DL}</span>
-           <span class="dl-text"><b>${esc(n.regulation.label || "Скачать положение")}</b>${n.regulation.note ? `<span>${esc(n.regulation.note)}</span>` : ""}</span></a>`
-      : `<p class="reg-soon">Текст положения будет опубликован на этой странице.</p>`;
+      ? `<a class="row" href="${esc(n.regulation.url)}" target="_blank" rel="noopener">
+       ${ICON_DOC}
+       <span class="row-name">
+         ${esc(n.regulation.label || "Положение о номинации")}
+         ${n.regulation.note ? `<span class="row-sub">${esc(n.regulation.note)}</span>` : ""}
+       </span>
+       ${ICON_CHEV}
+     </a>`
+  : `<p class="reg-soon">Текст положения будет опубликован на этой странице.</p>`;
     reg = `<div class="panel" style="margin-top:16px"><h3>Положение</h3>${paras}${dl}</div>`;
   }
   let tail = "";
@@ -618,8 +623,8 @@ function renderDocs() {
       : `<li><div class="row" style="cursor:default">${inner}</div></li>`;
   }).join("");
   return `
-    <div class="page-title pad"><h1>НПА мероприятия</h1><span class="rule"></span>
-      <p class="page-lead">Нормативные правовые акты и положения, на основании которых проходит мероприятие.</p></div>
+    <div class="page-title pad"><h1>Документы мероприятия</h1><span class="rule"></span>
+      <p class="page-lead">Положения, приказы и другие документы конкурса «Лучшие в спорте 2026».</p></div>
     <div class="pad" style="margin-top:26px"><ul class="rows">${rows}</ul></div>`;
 }
 
@@ -654,7 +659,7 @@ const MENU = [
   { gap: true },
   { href: "#nominations", label: "Перечень номинаций" },
   { href: "#moments", label: "Лучшие из лучших моментов" },
-  { href: "#docs", label: "НПА мероприятия" }
+  { href: "#docs", label: "Документы мероприятия" }
 ];
 function buildMenu(current) {
   $("#menu-nav").innerHTML = MENU.map(m => m.gap ? '<div class="gap"></div>' :
