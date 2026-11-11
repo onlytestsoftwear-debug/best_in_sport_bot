@@ -548,7 +548,7 @@ function renderHome() {
       <div class="big-links">
         <a class="big-link" href="#nominations"><div><b>Перечень номинаций</b><span>Все номинации, подноминации и положения</span></div>${ICON_CHEV}</a>
         <a class="big-link" href="#moments"><div><b>Лучшие из лучших моментов</b><span>Яркие события спортивного года</span></div>${ICON_CHEV}</a>
-        <a class="big-link" href="#docs"><div><b>НПА мероприятия</b><span>Нормативные правовые акты и положения</span></div>${ICON_CHEV}</a>
+        <a class="big-link" href="#docs"><div><b>Документы мероприятия</b><span>Нормативные правовые акты и положения</span></div>${ICON_CHEV}</a>
       </div>
     </section>`;
 }
@@ -692,7 +692,7 @@ function route() {
   if (h === "nominations") { page = "nominations"; html = renderNominations(); barTitle = "Номинации"; }
   else if (h.startsWith("nomination-")) { page = h; html = renderNomination(h.slice(11)); barTitle = "Номинация"; current = "#nominations"; }
   else if (h === "moments") { page = "moments"; html = renderMoments(); barTitle = "Лучшие моменты"; }
-  else if (h === "docs") { page = "docs"; html = renderDocs(); barTitle = "НПА"; }
+  else if (h === "docs") { page = "docs"; html = renderDocs(); barTitle = "Документы мероприятия"; }
   else { page = "home"; if (!ANCHORS.includes(h)) current = "#home"; }
 
   if (page !== lastPage) {
