@@ -444,9 +444,18 @@ const NOMINATIONS = [
   { id: "adaptive", title: "Лучшая организация адаптивного спорта", logo: "assets/logo-adaptive.png",
     description: "[Описание номинации «Лучшая организация адаптивного спорта».]",
     regulation: null, subs: [] },
-  { id: "digital", title: "Цифровая трансформация спорта", logo: "assets/logo-digital.png",
+    {
+    id: "digital",
+    title: "Цифровая трансформация спорта",
+    logo: "assets/logo-digital.png",
     description: "[Описание номинации «Цифровая трансформация спорта».]",
-    regulation: { text: REG_COMMON, url: "assets/docs/digital-transformation-sport.pdf", label: "Положение о номинации", note: "PDF, 1,2 МБ" subs: [] },
+    regulation: {
+      text: REG_COMMON,
+      url: "assets/docs/digital-transformation-sport.pdf",
+      note: "PDF, 1,2 МБ"
+    },
+    subs: []
+  },
   { id: "thanks", title: "Спасибо", logo: "assets/logo-thanks.png",
     description: "[Описание номинации «Спасибо».]",
     regulation: null, subs: [] }
